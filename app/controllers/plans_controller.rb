@@ -10,6 +10,7 @@ class PlansController < ApplicationController
         validate_is_primary
         
         Feed.create!(user_id: @user.id, activity_type: Feed::ACTIVITY_TYPES[:created_plan], plan_id: @plan.id)
+        # json_response(create_plan, :created)
 
         json_response(generate_full_plan(@plan), :created)
     end
@@ -57,7 +58,7 @@ class PlansController < ApplicationController
         diff = @plan.user.matriculation_year - @user.matriculation_year
         forked[:semesters] = forked[:semesters].map do |sem|
             sem[:year] -= diff
-            sem[:mods] = sem[:mods].map do |mod|
+            sem[:modules] = sem[:modules].map do |mod|
                 mod = mod.except(:id)
                 mod.except(:semester_id)
             end
@@ -82,8 +83,8 @@ class PlansController < ApplicationController
         plan[:semesters_attributes] = plan[:semesters]
         plan = plan.except(:semesters)
         plan[:semesters_attributes] = plan[:semesters_attributes].map do |sem|
-            sem[:mods_attributes] = sem[:mods]
-            sem.except(:mods)
+            sem[:mods_attributes] = sem[:modules]
+            sem.except(:modules)
         end
         plan
     end
@@ -100,7 +101,7 @@ class PlansController < ApplicationController
         params.permit(:is_primary, :start_year, :title, :description, 
             { semesters: [
                 :year, :semester_no,
-                    { mods: [
+                    { modules: [
                         :module_code, :module_title, :additional_desc, :order]}]})
     end
 
@@ -121,7 +122,7 @@ class PlansController < ApplicationController
         just_plan = Plan.find(plan.id).attributes.transform_keys(&:to_sym)
         just_plan[:semesters] = Plan.find(plan.id).semesters.map do |sem|
             sem_json = sem.attributes.transform_keys(&:to_sym)
-            sem_json[:mods] = sem.mods.as_json.map{ |mod| mod.transform_keys(&:to_sym) }
+            sem_json[:modules] = sem.mods.as_json.map{ |mod| mod.transform_keys(&:to_sym) }
             sem_json
         end
         just_plan
