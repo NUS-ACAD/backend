@@ -31,7 +31,7 @@ class InvitesController < ApplicationController
             json_response({message: "User not owner of group and cannot delete invite"}, :unprocessable_entity)
         else
             @invite.destroy
-            render json: @invite
+            json_response({message: "Invite deleted"})
         end
     end
 
