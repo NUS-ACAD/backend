@@ -1,7 +1,16 @@
 class GroupsController < ApplicationController
+
+    # GET /groups
     def index
         groups = Group.all
         render json: groups
+    end
+
+    # GET /groups/:id - gets name, desc (optional), all members in group
+    def show
+        @group = Group.find(params[:id])
+        members = Member.where(group_id: params[:id])
+        render json: { group_data: @group, members: members }
     end
 
     # POST /groups

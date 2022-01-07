@@ -51,13 +51,15 @@ class UsersController < ApplicationController
             if group_desc.nil?
                 @group_data.push({
                     group_id: group_id,
-                    group_name: group_name
+                    group_name: group_name,
+                    is_owner: member[:is_owner]
                 })
             else
                 @group_data.push({
                     group_id: group_id,
                     group_name: group_name,
-                    group_desc: group_desc
+                    group_desc: group_desc,
+                    is_owner: member[:is_owner]
                 })
             end
         }
