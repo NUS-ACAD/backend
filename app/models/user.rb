@@ -3,6 +3,6 @@ class User < ApplicationRecord
                     format: {with: URI::MailTo::EMAIL_REGEXP}
     validates :password, presence: true, length: {minimum: 8}
     has_many :plans
-    has_many :members, depedent: :destroy
+    has_many :members, dependent: :destroy
     has_secure_password
 end
