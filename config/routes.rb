@@ -19,5 +19,6 @@ Rails.application.routes.draw do
     post "groups/:id/leave", to: "groups#leave"
     post "groups", to: "groups#create"
     patch "groups", to: "groups#update"
+    delete "groups", to: "groups#destroy"
   end
 end
