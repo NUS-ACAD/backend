@@ -17,5 +17,7 @@ Rails.application.routes.draw do
     get "likes", to: "likes#index"
     post "likes", to: "likes#create"
     post "groups/:id/leave", to: "groups#leave"
+    post "groups", to: "groups#create"
+    patch "groups", to: "groups#update"
   end
 end
