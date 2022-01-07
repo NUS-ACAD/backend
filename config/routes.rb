@@ -8,9 +8,10 @@ Rails.application.routes.draw do
     resource :users, only: [:create]
     post "login", to: "users#login"
     get "auto_login", to: "users#auto_login"
-    resource :plans, only: [:index, :show, :create, :destroy]
+    resource :plans, only: [:create]
     put "plans/:id", to: "plans#update"
     delete "plans/:id", to: "plans#destroy"
     get "plans/:id", to: "plans#show"
+    post "plans/fork/:id", to: "plans#fork"
   end
 end
