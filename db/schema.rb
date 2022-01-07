@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2022_01_07_113933) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2022_01_07_113933) do
   create_table "members", force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
-    t.boolean "is_owner"
+    t.boolean "is_owner", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id", "user_id"], name: "index_members_on_group_id_and_user_id", unique: true

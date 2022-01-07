@@ -13,8 +13,12 @@ class LikesController < ApplicationController
             render json: @like
         else
             @like = Like.find_by(plan_id: plan_id, user_id: liker_id)
-            @like.destroy
-            render json: @like
+            if @like.nil?
+                json_response({ message: "unliking not possible as user did not like before" })
+            else
+                @like.destroy
+                render json: @like
+            end
         end
     end 
 

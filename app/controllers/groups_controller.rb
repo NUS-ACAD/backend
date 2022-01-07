@@ -38,8 +38,14 @@ class GroupsController < ApplicationController
         if member[:is_owner]
             if !group_update_params[:add_owner_member_id].nil?
                 group_id = params[:id]
-                Member.delete_by(user_id: group_update_params[:add_owner_member_id], group_id: group_id)
-                Member.create(user_id: group_update_params[:add_owner_member_id], group_id: group_id, is_owner: true)
+                # check if user made as owner is member of the group
+                member = Member.find_by(user_id: group_update_params[:add_owner_member_id], group_id: group_id)
+                if member.nil?
+                    render json: {message: "owner must be member of the group"}
+                else
+                    Member.delete_by(user_id: group_update_params[:add_owner_member_id], group_id: group_id)
+                    Member.create(user_id: group_update_params[:add_owner_member_id], group_id: group_id, is_owner: true)
+                end
             elsif !group_update_params[:remove_owner_member_id].nil?
                 group_id = params[:id]
                 Member.delete_by(user_id: group_update_params[:remove_owner_member_id], group_id: group_id)
@@ -55,17 +61,24 @@ class GroupsController < ApplicationController
     end
 
     # POST /groups/:id/leave
+    # must be in the group and can't be the only owner
     def leave
         @member = Member.find_by(user_id: @user[:id], group_id: params[:id])
-        if !@member.nil? 
-            if @member[:is_owner]
-                render json: {message: "user is owner of group and cannot leave"}
+        @group_owners = Member.where(is_owner: true, group_id: params[:id])
+        if @member.nil? 
+            render json: {message: "user is not member of the group"}
+        else
+            if @group_owners.length() == 1
+                if @member[:is_owner]
+                    render json: {message: "User is owner of group and cannot leave"}
+                else
+                    @member.destroy
+                    json_response({message: "User no longer member of group"})
+                end
             else
                 @member.destroy
                 json_response({message: "User no longer member of group"})
             end
-        else
-            render json: {message: "user is not member of the group"}
         end 
     end
 

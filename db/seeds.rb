@@ -10,6 +10,7 @@ users = User.create([
     {
         name: "Johnny",
         email: "johnyy@u.nus.edu",
+        password: "johnny123",
         primary_degree: "Business",
         second_degree: nil,
         second_major: nil,
@@ -20,6 +21,7 @@ users = User.create([
     {
         name: "Jennifer",
         email: "jennifer@u.nus.edu",
+        password: "johnny123",
         primary_degree: "Economics",
         second_degree: nil,
         second_major: nil,
@@ -30,6 +32,7 @@ users = User.create([
     {
         name: "Sam",
         email: "sam@u.nus.edu",
+        password: "johnny123",
         primary_degree: "Information Systems",
         second_degree: nil,
         second_major: nil,
@@ -41,11 +44,23 @@ users = User.create([
         name: "Edward",
         email: "edward@u.nus.edu",
         primary_degree: "Law",
+        password: "johnny123",
         second_degree: nil,
         second_major: nil,
         first_minor: nil,
         second_minor: nil,
         matriculation_year: 2019
+    }
+])
+
+groups = Group.create([
+    {
+        name: "CS Planning",
+        description: "To plan my CS mods!"
+    },
+    {
+        name: "Business Planning",
+        description: "To plan my biz mods!"
     }
 ])
 
@@ -65,17 +80,6 @@ follows = Follow.create([
     {
         follower_id: 2,
         followed_id: 3
-    }
-])
-
-groups = Group.create([
-    {
-        name: "CS Planning",
-        description: "To plan my CS mods!"
-    },
-    {
-        name: "Business Planning",
-        description: "To plan my biz mods!"
     }
 ])
 
@@ -125,22 +129,22 @@ semesters = Semester.create([
     {
         plan_id: 1,
         year: 2010,
-        semester: 1
+        semester_no: 1
     },
     {
         plan_id: 1,
         year: 2010,
-        semester: 2
+        semester_no: 2
     },
     {
         plan_id: 2,
         year: 2011,
-        semester: 1
+        semester_no: 1
     },
     {
         plan_id: 2,
         year: 2011,
-        semester: 2
+        semester_no: 2
     },
 ])
 

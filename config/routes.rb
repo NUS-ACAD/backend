@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get "auto_login", to: "users#auto_login"
     resource :plans, only: [:create]
     get "invites", to: "invites#index"
+    get "invites/:id", to: "invites#get_invites_for_user"
     post "invites", to: "invites#create"
     delete "invites/:id", to: "invites#destroy"
     patch "invites/:id", to: "invites#update"
