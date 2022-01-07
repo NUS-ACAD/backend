@@ -49,6 +49,7 @@ class GroupsController < ApplicationController
                 end
             elsif !group_update_params[:remove_owner_member_id].nil?
                 group_id = params[:id]
+                # check if user made as owner is member of the group
                 member = Member.find_by(user_id: group_update_params[:add_owner_member_id], group_id: group_id)
                 if member.nil?
                     render json: { message: "user must be owner of the group" }
