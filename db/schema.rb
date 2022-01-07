@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_07_072644) do
+ActiveRecord::Schema.define(version: 2022_01_07_072815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2022_01_07_072644) do
     t.integer "order"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "module_title", null: false
+    t.string "module_title"
     t.index ["semester_id", "module_code"], name: "index_mods_on_semester_id_and_module_code", unique: true
   end
 
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 2022_01_07_072644) do
     t.integer "matriculation_year"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest"
   end
 
   add_foreign_key "feeds", "users"
