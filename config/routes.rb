@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resource :users, only: [:create]
     post "login", to: "users#login"
     get "auto_login", to: "users#auto_login"
+    resource :plans, only: [:create]
     get "invites", to: "invites#index"
     post "invites", to: "invites#create"
     delete "invites/:id", to: "invites#destroy"
@@ -21,9 +22,9 @@ Rails.application.routes.draw do
     delete "groups/:id", to: "groups#destroy"
     post "groups/:id/leave", to: "groups#leave"
     get "users/:id", to: "users#index"
-    resource :plans, only: [:index, :show, :create, :destroy]
     put "plans/:id", to: "plans#update"
     delete "plans/:id", to: "plans#destroy"
     get "plans/:id", to: "plans#show"
+    post "plans/fork/:id", to: "plans#fork"
   end
 end
