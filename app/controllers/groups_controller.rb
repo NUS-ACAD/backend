@@ -39,6 +39,9 @@ class GroupsController < ApplicationController
                 group_id = params[:id]
                 Member.delete_by(user_id: group_update_params[:delete_member_id], group_id: group_id) 
             end
+
+            Feed.create!(user_id: @user.id, activity_type: Feed::changed_group, group_id: params[:id])
+
             render json: {message: "group updated"}
         else
             render json: {message: "Non-owner cannot update"}
