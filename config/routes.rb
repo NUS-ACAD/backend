@@ -21,5 +21,9 @@ Rails.application.routes.draw do
     delete "groups/:id", to: "groups#destroy"
     post "groups/:id/leave", to: "groups#leave"
     get "users/:id", to: "users#index"
+    resource :plans, only: [:index, :show, :create, :destroy]
+    put "plans/:id", to: "plans#update"
+    delete "plans/:id", to: "plans#destroy"
+    get "plans/:id", to: "plans#show"
   end
 end

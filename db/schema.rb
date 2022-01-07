@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_07_072815) do
+ActiveRecord::Schema.define(version: 2022_01_07_113933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2022_01_07_072815) do
   create_table "semesters", force: :cascade do |t|
     t.integer "plan_id"
     t.integer "year"
-    t.integer "semester"
+    t.integer "semester_no"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -122,5 +122,5 @@ ActiveRecord::Schema.define(version: 2022_01_07_072815) do
   add_foreign_key "mods", "semesters"
   add_foreign_key "plans", "plans", column: "forked_plan_source_id"
   add_foreign_key "plans", "users", column: "owner_id"
-  add_foreign_key "semesters", "users", column: "plan_id"
+  add_foreign_key "semesters", "plans"
 end
