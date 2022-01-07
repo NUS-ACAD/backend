@@ -4,12 +4,6 @@ class GroupsController < ApplicationController
         render json: groups
     end
 
-<<<<<<< HEAD
-    def leave
-        puts params[:id].inspect
-    end
-
-=======
     def create
         group = Group.create(group_create_params)
         member = Members.create(user_id: @user[:id], group_id: group[:id], is_owner: true)
@@ -62,5 +56,4 @@ class GroupsController < ApplicationController
     def group_delete_params
         params.permit(:group_id, :delete_member_id, :add_owner_member_id, :remove_owner_member_id)
     end
->>>>>>> 2cf42be75f3558d2fd648f4cd7c18f204f384c77
 end
