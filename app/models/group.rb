@@ -1,5 +1,3 @@
 class Group < ApplicationRecord
-    def create
-        
-    end
+    has_many :members, depedent: :destroy
 end
