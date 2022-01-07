@@ -4,5 +4,4 @@ class User < ApplicationRecord
     validates :password, length: {minimum: 8}, if: -> { password.present? }
     has_many :members, dependent: :destroy
     has_many :plans, foreign_key: 'owner_id'
-    has_secure_password
 end

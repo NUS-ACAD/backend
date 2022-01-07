@@ -83,9 +83,10 @@ class PlansController < ApplicationController
         @plan = Plan.find(params[:id])
     end
 
-    def create:
+    def create
         @todo = todo_params
         puts @todo.inspect
+    end
 
     def check_authorised
         json_response({ message: "Unauthorised."}, :unauthorized) if @user.id != @plan.owner_id
