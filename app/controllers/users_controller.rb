@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-<<<<<<< HEAD
     before_action :authorized, only: [:auto_login]
 
     # REGISTER
@@ -29,10 +28,5 @@ class UsersController < ApplicationController
 
     def user_params
         params.permit(:email, :password, :name, :primary_degree, :second_degree, :second_major, :first_minor, :second_minor, :matriculation_year)
-=======
-    def index
-        users = User.all
-        render json: users
->>>>>>> 3f29ab899cb856f4c19ac7d548b86f68d0d238a1
     end
 end
