@@ -29,5 +29,6 @@ Rails.application.routes.draw do
     delete "plans/:id", to: "plans#destroy"
     get "plans/:id", to: "plans#show"
     post "plans/fork/:id", to: "plans#fork"
+    get "/home", to: "home#index"
   end
 end
