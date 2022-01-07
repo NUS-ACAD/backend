@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  semester_id: 1
+  module_code: MyString
+  additional_desc: MyText
+  order: 1
+
+two:
+  semester_id: 1
+  module_code: MyString
+  additional_desc: MyText
+  order: 1
