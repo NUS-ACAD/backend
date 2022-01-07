@@ -5,6 +5,7 @@ class Feed < ApplicationRecord
         updated_plan: "updated_plan",
         deleted_plan: "deleted_plan",
         changed_group: "changed_group",
+        deleted_group: "deleted_group",
         changed_primary_plan: "changed_primary_plan"
     }
 end

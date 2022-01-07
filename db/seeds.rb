@@ -102,7 +102,17 @@ members = Member.create([
     {
         group_id: 2,
         user_id: 4,
+        is_owner: false
+    },
+    {
+        group_id: 2,
+        user_id: 5,
         is_owner: true
+    },
+    {
+        group_id: 2,
+        user_id: 1,
+        is_owner: false
     },
 ])
 

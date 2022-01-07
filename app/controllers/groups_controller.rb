@@ -26,6 +26,7 @@ class GroupsController < ApplicationController
         member = Member.find_by(user_id: @user[:id], group_id: params[:id])
         if member[:is_owner]
             Group.find_by(id: params[:id]).destroy
+            Feed.create!(user_id: @user.id, activity_type: Feed::ACTIVITY_TYPES[:deleted_group], group_id: params[:id])
             render json: {message: "deleted"}
         else
             render json: {message: "Non-owner cannot delete"}
@@ -41,23 +42,29 @@ class GroupsController < ApplicationController
                 # check if user made as owner is member of the group
                 member = Member.find_by(user_id: group_update_params[:add_owner_member_id], group_id: group_id)
                 if member.nil?
-                    render json: {message: "owner must be member of the group"}
+                    render json: { message: "owner must be member of the group" }
                 else
                     Member.delete_by(user_id: group_update_params[:add_owner_member_id], group_id: group_id)
                     Member.create(user_id: group_update_params[:add_owner_member_id], group_id: group_id, is_owner: true)
                 end
             elsif !group_update_params[:remove_owner_member_id].nil?
                 group_id = params[:id]
-                Member.delete_by(user_id: group_update_params[:remove_owner_member_id], group_id: group_id)
-                Member.create(user_id: group_update_params[:remove_owner_member_id], group_id: group_id, is_owner: false)
+                member = Member.find_by(user_id: group_update_params[:add_owner_member_id], group_id: group_id)
+                if member.nil?
+                    render json: { message: "user must be owner of the group" }
+                elsif !member[:is_owner]
+                    render json: { message: "user must be owner of the group" }
+                else
+                    Member.delete_by(user_id: group_update_params[:remove_owner_member_id], group_id: group_id)
+                    Member.create(user_id: group_update_params[:remove_owner_member_id], group_id: group_id, is_owner: false)
+                end
             elsif !group_update_params[:delete_member_id].nil?
                 group_id = params[:id]
                 Member.delete_by(user_id: group_update_params[:delete_member_id], group_id: group_id) 
             end
 
-            Feed.create!(user_id: @user.id, activity_type: Feed::changed_group, group_id: params[:id])
+            Feed.create!(user_id: @user.id, activity_type: Feed::ACTIVITY_TYPES[:changed_group], group_id: params[:id])
 
-            render json: {message: "group updated"}
         else
             render json: {message: "Non-owner cannot update"}
         end
