@@ -6,6 +6,12 @@ class PlansController < ApplicationController
     def index
         json_response(@user.plans)
     end
+
+    # GET /plans/:id
+    def retrieve
+        plan = Plan.find(params[:id])
+        render json: @plan
+    end
     
     private
 
@@ -13,9 +19,10 @@ class PlansController < ApplicationController
         @plan = Plan.find(params[:id])
     end
 
-    def create:
+    def create
         @todo = todo_params
         puts @todo.inspect
+    end
 
     def check_authorised
         json_response({ message: "Unauthorised."}, :unauthorized) if @user.id != @plan.user_id

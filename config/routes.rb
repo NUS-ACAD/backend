@@ -19,5 +19,7 @@ Rails.application.routes.draw do
     post "groups/:id/leave", to: "groups#leave"
     post "groups", to: "groups#create"
     patch "groups", to: "groups#update"
+    get "plans/:id", to: "plans#retrieve"
+    get "plans", to: "plans#index"
   end
 end
