@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2022_01_07_072815) do
+=======
+ActiveRecord::Schema.define(version: 2022_01_07_072644) do
+>>>>>>> 3f29ab899cb856f4c19ac7d548b86f68d0d238a1
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +35,10 @@ ActiveRecord::Schema.define(version: 2022_01_07_072815) do
     t.integer "followed_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+<<<<<<< HEAD
+=======
+    t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
+>>>>>>> 3f29ab899cb856f4c19ac7d548b86f68d0d238a1
   end
 
   create_table "groups", force: :cascade do |t|
@@ -53,6 +61,10 @@ ActiveRecord::Schema.define(version: 2022_01_07_072815) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+<<<<<<< HEAD
+=======
+    t.index ["user_id", "plan_id"], name: "index_likes_on_user_id_and_plan_id", unique: true
+>>>>>>> 3f29ab899cb856f4c19ac7d548b86f68d0d238a1
   end
 
   create_table "members", force: :cascade do |t|
@@ -61,6 +73,10 @@ ActiveRecord::Schema.define(version: 2022_01_07_072815) do
     t.boolean "is_owner"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+<<<<<<< HEAD
+=======
+    t.index ["group_id", "user_id"], name: "index_members_on_group_id_and_user_id", unique: true
+>>>>>>> 3f29ab899cb856f4c19ac7d548b86f68d0d238a1
   end
 
   create_table "mods", force: :cascade do |t|
@@ -70,6 +86,11 @@ ActiveRecord::Schema.define(version: 2022_01_07_072815) do
     t.integer "order"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+<<<<<<< HEAD
+=======
+    t.string "module_title", null: false
+    t.index ["semester_id", "module_code"], name: "index_mods_on_semester_id_and_module_code", unique: true
+>>>>>>> 3f29ab899cb856f4c19ac7d548b86f68d0d238a1
   end
 
   create_table "plans", force: :cascade do |t|
@@ -102,7 +123,10 @@ ActiveRecord::Schema.define(version: 2022_01_07_072815) do
     t.integer "matriculation_year"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+<<<<<<< HEAD
     t.string "password_digest"
+=======
+>>>>>>> 3f29ab899cb856f4c19ac7d548b86f68d0d238a1
   end
 
   add_foreign_key "feeds", "users"
