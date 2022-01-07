@@ -18,6 +18,7 @@ class LikesController < ApplicationController
         end
     end 
 
+    private
     def likes_params
         params.permit(:to_like, :plan_id)
     end

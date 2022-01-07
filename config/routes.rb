@@ -16,9 +16,10 @@ Rails.application.routes.draw do
     post "follows", to: "follows#create"
     get "likes", to: "likes#index"
     post "likes", to: "likes#create"
-    post "groups/:id/leave", to: "groups#leave"
     post "groups", to: "groups#create"
-    patch "groups", to: "groups#update"
-    delete "groups", to: "groups#destroy"
+    patch "groups/:id", to: "groups#update"
+    delete "groups/:id", to: "groups#destroy"
+    post "groups/:id/leave", to: "groups#leave"
+    get "users/:id", to: "users#index"
   end
 end
