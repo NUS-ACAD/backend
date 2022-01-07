@@ -9,15 +9,21 @@ class PlansController < ApplicationController
         @plan = Plan.create!(create_plan)
         validate_is_primary
         
+        Feed.create!(user_id: @user.id, activity_type: Feed::ACTIVITY_TYPES[:created_plan], plan_id: @plan.id)
+
         json_response(generate_full_plan(@plan), :created)
     end
 
     # PUT /plans/:id
     def update
+        raw = @plan.to_json
         @plan.semesters.destroy_all
         plan_params[:owner_id] = @user.id
         @plan.update!(clean_nested_plan(plan_params))
         validate_is_primary
+
+        Feed.create!(user_id: @user.id, activity_type: Feed::ACTIVITY_TYPES[:updated_plan], plan_id: @plan.id)
+
         json_response(generate_full_plan(@plan), :created)
     end
 
@@ -27,6 +33,9 @@ class PlansController < ApplicationController
         if destroyed.is_primary && @user.plans.length != 0
             @user.plans.first.update!(is_primary: true)
         end
+
+        Feed.create!(user_id: @user.id, activity_type: Feed::ACTIVITY_TYPES[:deleted_plan], plan_id: @plan.id)
+
         head :no_content
     end
 
@@ -83,11 +92,6 @@ class PlansController < ApplicationController
         @plan = Plan.find(params[:id])
     end
 
-    def create
-        @todo = todo_params
-        puts @todo.inspect
-    end
-
     def check_authorised
         json_response({ message: "Unauthorised."}, :unauthorized) if @user.id != @plan.owner_id
     end
@@ -101,10 +105,15 @@ class PlansController < ApplicationController
     end
 
     def validate_is_primary
+        before = @user.plans.find_by(is_primary: true)
         if @plan.is_primary
             @user.plans.where.not(id: @plan.id).update_all(is_primary: false)
         elsif @user.plans.where(is_primary: true).length == 0
             @plan.update!(is_primary: true)
+        end
+        after = @user.reload.plans.find_by(is_primary: true)
+        if before && after && before.id != after.id
+            Feed.create!(user_id: @user.id, activity_type: Feed::ACTIVITY_TYPES[:changed_primary_plan], plan_id: after.id)
         end
     end
 
@@ -117,6 +126,7 @@ class PlansController < ApplicationController
         end
         just_plan
     end
+
 end
 
 
