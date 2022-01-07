@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_07_042525) do
+ActiveRecord::Schema.define(version: 2022_01_07_072815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "feeds", force: :cascade do |t|
     t.integer "user_id"
-    t.text "activity_type", null: false
+    t.text "activity_type"
     t.integer "plan_id"
     t.integer "second_plan_id"
     t.integer "group_id"
@@ -31,10 +31,11 @@ ActiveRecord::Schema.define(version: 2022_01_07_042525) do
     t.integer "followed_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -43,7 +44,7 @@ ActiveRecord::Schema.define(version: 2022_01_07_042525) do
   create_table "invites", force: :cascade do |t|
     t.integer "invitee_id"
     t.integer "group_id"
-    t.string "status", null: false
+    t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -53,31 +54,35 @@ ActiveRecord::Schema.define(version: 2022_01_07_042525) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "plan_id"], name: "index_likes_on_user_id_and_plan_id", unique: true
   end
 
   create_table "members", force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
-    t.boolean "is_owner", null: false
+    t.boolean "is_owner"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id", "user_id"], name: "index_members_on_group_id_and_user_id", unique: true
   end
 
   create_table "mods", force: :cascade do |t|
-    t.integer "semester_id", null: false
-    t.string "module_code", null: false
+    t.integer "semester_id"
+    t.string "module_code"
     t.text "additional_desc"
-    t.integer "order", null: false
+    t.integer "order"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "module_title"
+    t.index ["semester_id", "module_code"], name: "index_mods_on_semester_id_and_module_code", unique: true
   end
 
   create_table "plans", force: :cascade do |t|
     t.integer "owner_id"
     t.integer "forked_plan_source_id"
-    t.boolean "is_primary", null: false
-    t.integer "start_year", null: false
-    t.string "title", null: false
+    t.boolean "is_primary"
+    t.integer "start_year"
+    t.string "title"
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -85,8 +90,8 @@ ActiveRecord::Schema.define(version: 2022_01_07_042525) do
 
   create_table "semesters", force: :cascade do |t|
     t.integer "plan_id"
-    t.integer "year", null: false
-    t.integer "semester", null: false
+    t.integer "year"
+    t.integer "semester"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -94,7 +99,7 @@ ActiveRecord::Schema.define(version: 2022_01_07_042525) do
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.string "primary_degree", null: false
+    t.string "primary_degree"
     t.string "second_degree"
     t.string "second_major"
     t.string "first_minor"
@@ -102,6 +107,7 @@ ActiveRecord::Schema.define(version: 2022_01_07_042525) do
     t.integer "matriculation_year"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest"
   end
 
   add_foreign_key "feeds", "users"
