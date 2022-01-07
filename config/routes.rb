@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :feeds, :follows, :invites, :likes, :members, :mods, :plans, :semesters, :users
+  resources :feeds, :follows, :invites, :likes, :members, :mods, :plans, :semesters, :users, :groups
 end
