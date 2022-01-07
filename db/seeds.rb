@@ -10,7 +10,6 @@ users = User.create([
     {
         name: "Johnny",
         email: "johnyy@u.nus.edu",
-        password: "abcd1234",
         primary_degree: "Business",
         second_degree: nil,
         second_major: nil,
@@ -21,7 +20,6 @@ users = User.create([
     {
         name: "Jennifer",
         email: "jennifer@u.nus.edu",
-        password: "abcd1234",
         primary_degree: "Economics",
         second_degree: nil,
         second_major: nil,
@@ -32,7 +30,6 @@ users = User.create([
     {
         name: "Sam",
         email: "sam@u.nus.edu",
-        password: "abcd1234",
         primary_degree: "Information Systems",
         second_degree: nil,
         second_major: nil,
@@ -43,7 +40,6 @@ users = User.create([
     {
         name: "Edward",
         email: "edward@u.nus.edu",
-        password: "abcd1234",
         primary_degree: "Law",
         second_degree: nil,
         second_major: nil,
