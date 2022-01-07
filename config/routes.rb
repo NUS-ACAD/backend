@@ -8,5 +8,14 @@ Rails.application.routes.draw do
     resource :users, only: [:create]
     post "login", to: "users#login"
     get "auto_login", to: "users#auto_login"
+    get "invites", to: "invites#index"
+    post "invites", to: "invites#create"
+    delete "invites/:id", to: "invites#destroy"
+    patch "invites/:id", to: "invites#update"
+    get "follows", to: "follows#index"
+    post "follows", to: "follows#create"
+    get "likes", to: "likes#index"
+    post "likes", to: "likes#create"
+    post "groups/:id/leave", to: "groups#leave"
   end
 end
