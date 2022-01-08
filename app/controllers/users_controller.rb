@@ -80,7 +80,7 @@ class UsersController < ApplicationController
         just_plan = Plan.find(plan.id).attributes.transform_keys(&:to_sym)
         just_plan[:semesters] = Plan.find(plan.id).semesters.map do |sem|
             sem_json = sem.attributes.transform_keys(&:to_sym)
-            sem_json[:mods] = sem.mods.as_json.map{ |mod| mod.transform_keys(&:to_sym) }
+            sem_json[:modules] = sem.mods.as_json.map{ |mod| mod.transform_keys(&:to_sym) }
             sem_json
         end
         just_plan
