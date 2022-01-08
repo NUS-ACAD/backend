@@ -15,9 +15,11 @@ class GroupsController < ApplicationController
 
     # POST /groups
     def create
-        group = Group.create(group_create_params)
-        member = Member.create(user_id: @user[:id], group_id: group[:id], is_owner: true)
+        group = Group.create!(group_create_params)
+        member = Member.create!(user_id: @user[:id], group_id: group[:id], is_owner: true)
         # json_response({member: member, group: group}, :created)
+        Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:created_group], group_id: group.id, group_name: group.name)
+
         render json: {message: "created"}
     end
 
@@ -25,8 +27,8 @@ class GroupsController < ApplicationController
     def destroy
         member = Member.find_by(user_id: @user[:id], group_id: params[:id])
         if member[:is_owner]
-            Group.find_by(id: params[:id]).destroy
-            Feed.create!(user_id: @user.id, activity_type: Feed::ACTIVITY_TYPES[:deleted_group], group_id: params[:id])
+            deleted = Group.find_by(id: params[:id]).destroy
+            Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:deleted_group],group_id: params[:id], group_name: deleted.name)
             render json: {message: "deleted"}
         else
             render json: {message: "Non-owner cannot delete"}
@@ -64,8 +66,7 @@ class GroupsController < ApplicationController
                 Member.delete_by(user_id: group_update_params[:delete_member_id], group_id: group_id) 
             end
 
-            Feed.create!(user_id: @user.id, activity_type: Feed::ACTIVITY_TYPES[:changed_group], group_id: params[:id])
-
+            Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:changed_group], group_id: params[:id], group_name: Group.find(params[:id]).name)
         else
             render json: {message: "Non-owner cannot update"}
         end
