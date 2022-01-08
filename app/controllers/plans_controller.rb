@@ -8,13 +8,14 @@ class PlansController < ApplicationController
         create_plan[:owner_id] = @user.id
         @plan = Plan.create!(create_plan)
         validate_is_primary
-        
-        Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:created_plan], plan_name:@plan.title, plan_id: @plan.id)
+        temp = {user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:created_plan], plan_name:@plan.title, plan_id: @plan.id}
+        puts temp
+        Feed.create!(temp)
         # json_response(create_plan, :created)
 
         json_response(generate_full_plan(@plan), :created)
     end
-
+    Feed.create!({:user_id=>7, :user_name=>"sherwin", :activity_type=>"created_plan", :plan_name=>"main", :plan_id=>82})
     # PUT /plans/:id
     def update
         raw = @plan.to_json
