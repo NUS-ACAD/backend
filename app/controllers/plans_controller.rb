@@ -72,7 +72,7 @@ class PlansController < ApplicationController
 
         @forked_plan = Plan.create!(clean_nested_plan(forked).except(:id))
 
-        Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:forked_plan], plan_name:@plan.title, plan_id: @plan.id, second_plan_id: @forked_plan.id, second_plan_name: @forked_plan.name)
+        Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:forked_plan], plan_name:@plan.title, plan_id: @plan.id, second_plan_id: @forked_plan.id, second_plan_name: @forked_plan.title)
 
         json_response(generate_full_plan(@forked_plan), :created)
     end
@@ -115,7 +115,7 @@ class PlansController < ApplicationController
         end
         after = @user.reload.plans.find_by(is_primary: true)
         if before && after && before.id != after.id
-            Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:changed_primary_plan], plan_title: after.title, plan_id: after.id)
+            Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:changed_primary_plan], plan_name: after.title, plan_id: after.id)
         end
     end
 
