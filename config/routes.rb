@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     delete "groups/:id", to: "groups#destroy"
     post "groups/:id/leave", to: "groups#leave"
     get "users/:id", to: "users#index"
-    put "plans/:id", to: "plans#update"
+    patch "plans/:id", to: "plans#update"
     delete "plans/:id", to: "plans#destroy"
     get "plans/:id", to: "plans#show"
     post "plans/fork/:id", to: "plans#fork"
