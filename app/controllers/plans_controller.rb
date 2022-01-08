@@ -115,7 +115,7 @@ class PlansController < ApplicationController
         end
         after = @user.reload.plans.find_by(is_primary: true)
         if before && after && before.id != after.id
-            Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:changed_primary_plan], plan_title: after.title, plan_id: after.id)
+            Feed.create!(user_id: @user.id, user_name: @user.name, activity_type: Feed::ACTIVITY_TYPES[:changed_primary_plan], plan_name: after.title, plan_id: after.id)
         end
     end
 
